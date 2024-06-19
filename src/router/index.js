@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import LandingPortal from "../views/guest/LandingPortal.vue";
 import OrganizationList from "../views/admin/Organizations/OrganizationsList.vue";
 import { checkeradmin, checkerer, checkerr } from "../../auth/isauth";
+import Settings from "@/views/shared/Documents/settings.vue";
 import Admin from "../views/admin/Admin";
 import AdminDashboard from "@/views/admin/AdminDashboard";
 import Institution from "@/views/institution/Institution";
@@ -12,6 +13,7 @@ import DocumentView from "@/views/shared/Documents/DocumentView.vue";
 import DocumentDetails from "@/views/shared/Documents/DocumentDetails.vue";
 import Operator from "@/views/operator/Operator.vue";
 import OperatorDashboard from "@/views/operator/OperatorDashboard.vue";
+import verifyTest from "@/views/guest/verify.test.vue";
 
 async function checkAuth(to, from, next) {
   // let isAuthenticated = await checkerr();
@@ -123,7 +125,7 @@ export const routes = [
     name: "home",
     component: LandingPortal,
   },
-  ,
+
   {
     path: "/admin",
     redirect: "/admin/dashboard",
@@ -137,6 +139,10 @@ export const routes = [
       {
         path: "institutions",
         component: OrganizationList,
+      },
+      {
+        path: "settings",
+        component: Settings,
       },
     ],
   },
@@ -169,6 +175,10 @@ export const routes = [
         component: DocumentDetails,
         meta: { userAccessed: "institution" },
       },
+      {
+        path: "settings",
+        component: Settings,
+      },
     ],
   },
   {
@@ -195,6 +205,23 @@ export const routes = [
         path: "document-details/:cid",
         component: DocumentDetails,
         meta: { userAccessed: "operator" },
+      },
+      {
+        path: "/settings",
+        name: "settings",
+        component: Settings,
+      },
+    ],
+  },
+
+  {
+    path: "/verify",
+    name: "verify",
+    component: verifyTest,
+    children: [
+      {
+        path: "document-view/:cid/:documentName",
+        component: DocumentView,
       },
     ],
   },
